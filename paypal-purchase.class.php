@@ -43,36 +43,34 @@ class PayPal_Purchase extends PayPal_Digital_Goods {
 		 * 
 		 * @param args, named parameters to customise the subscription and checkout process. See description for available parameters.
 		 */
-		public function __construct( $purchase_details = array() ){
+		public function __construct( Payment $payment ){
 
-			$purchase_defaults = array( 
-					'name'           => 'Digital Good',
-					'description'    => '',
-					// Price
-					'amount'         => '5.00',
-					'tax_amount'     => '0.00',
-					'invoice_number' => '',
-					'number'         => '',
-					'items'          => array(),
-					'custom'         => '',
-			);
+		
+                     
+                        $purchase_details = array(
+                        'name'        => $payment->orderDescription,
+                        'description' => $payment->orderDescription,
+                        'amount'      => $payment->amount, // Total including tax
+                        'tax_amount'      => $payment->VAT, // Just the total tax amount
+                        'items'       => array(
+                                array( // First item
+                                        'item_name'        => $payment->productName,
+                                        'item_description' => $payment->description,
+                                        'item_amount'      => $payment->amount,
+                                        'item_tax'         => $payment->VAT,
+                                        'item_quantity'    => 1,
+                                        'item_number'      => $payment->code,
+                                )
+                        )
+                );
+                    
+                    
+                    
+                    
 
-			$purchase_details = array_merge( $purchase_defaults, $purchase_details );
+			$this->purchase = (object) $purchase_details;
 
-			// Make it super simple to create a single item transaction
-			if( empty( $purchase_details['items'] ) )
-				$purchase_details['items'] = array( array( 
-					'item_name'        => $purchase_details['name'],
-					'item_description' => $purchase_details['description'],
-					'item_amount'      => $purchase_details['amount'],
-					'item_tax'         => $purchase_details['tax_amount'],
-					'item_quantity'    => 1,
-					'item_number'      => $purchase_details['number']
-				) );
-
-			$this->purchase = (object)$purchase_details;
-
-			parent::__construct();
+			parent::__construct(  $payment);
 
 		}
 

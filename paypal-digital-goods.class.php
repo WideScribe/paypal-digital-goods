@@ -62,7 +62,7 @@ abstract class PayPal_Digital_Goods {
 	 * @param api_credentials, required, a name => value array containing your API username, password and signature.
 	 * @param args, named parameters to customise the subscription and checkout process. See description for available parameters.
 	 */
-	public function __construct( $args = array() ){
+	public function __construct( $payment ){
 
 		if( '' == PayPal_Digital_Goods_Configuration::username() || '' == PayPal_Digital_Goods_Configuration::password() || '' == PayPal_Digital_Goods_Configuration::signature() )
 			exit( 'You must specify your PayPal API username, password & signature in the $api_credentials array. For details of how to ' );
@@ -71,7 +71,7 @@ abstract class PayPal_Digital_Goods {
 
 		$defaults = array(
 			'sandbox'       => true,
-			'business_name' => '',
+			'business_name' => 'WideScribe AS',
 			'solution_type' => 'Sole',
 			'return_url'    => PayPal_Digital_Goods_Configuration::return_url(),
 			'cancel_url'    => PayPal_Digital_Goods_Configuration::cancel_url(),
@@ -79,16 +79,16 @@ abstract class PayPal_Digital_Goods {
 			'locale_code'   => PayPal_Digital_Goods_Configuration::locale_code(), // Defaults to 'US'
 		);
 
-		$args = array_merge( $defaults, $args );
+	
 
-		$this->currency      = PayPal_Digital_Goods_Configuration::currency();
-		$this->business_name = $args['business_name'];
+		$this->currency      = $payment->currencyCode;
+		$this->business_name = $defaults['business_name'];
 
-		$this->return_url    = $args['return_url'];
-		$this->cancel_url    = $args['cancel_url'];
-		$this->notify_url    = $args['notify_url'];
-		$this->solution_type = $args['solution_type'];
-		$this->locale_code   = $args['locale_code'];
+		$this->return_url    = $defaults['return_url'];
+		$this->cancel_url    = $defaults['cancel_url'];
+		$this->notify_url    = $defaults['notify_url'];
+		$this->solution_type = $defaults['solution_type'];
+		$this->locale_code   = $defaults['locale_code'];
 	}
 
 	/**

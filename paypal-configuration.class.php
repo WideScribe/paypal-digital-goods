@@ -33,19 +33,21 @@ class PayPal_Digital_Goods_Configuration {
 	 * @access private
 	 * @static
 	 */
+       
+        
 	private static $_cache = array(
 		'environment'   => 'sandbox',
-		'business_name' => '',
-		'cancel_url'    => '',
-		'return_url'    => '',
-		'notify_url'    => '',
+		'business_name' => 'WideScribe AS',
+		'cancel_url'    => 'https://beta.widescribe.com/purchase/paypal/cancel',
+		'return_url'    => 'https://beta.widescribe.com/purchase/paypal/success',
+		'notify_url'    => 'https://beta.widescribe.com/purchase/paypal/notify',
 		'currency'      => 'USD',
-		'username'      => '',
-		'password'      => '',
-		'signature'     => '',
+		'username'      => 'jens-facilitator_api1.kardangdesign.no',
+		'password'      => '1403466352',
+		'signature'     => 'AFcWxV21C7fd0v3bYYYRCpSSRl31AD7aoWVvYBOPlDg5.z.iRmOW7baT',
 		'incontext_url' => 'yes',
 		'mobile_url'    => 'no',
-		'locale_code'   => 'US', // A special form of the locale for PayPal's mixed handling (i.e. expects 2 character for some locales and 5 for others. Full list here: https://developer.paypal.com/webapps/developer/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/)
+		'locale_code'   => 'no_NO', // A special form of the locale for PayPal's mixed handling (i.e. expects 2 character for some locales and 5 for others. Full list here: https://developer.paypal.com/webapps/developer/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/)
 		);
 
 	/**
